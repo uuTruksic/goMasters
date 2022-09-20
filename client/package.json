@@ -9,9 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.6",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "@types/styled-components": "^5.1.26",
+    "formik": "^2.2.9",
+    "install": "^0.13.0",
+    "npm": "^8.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.0"
+    "react-router-dom": "^6.4.0",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
