@@ -1,21 +1,27 @@
-import { Button } from "@mui/material";
 import styled from "styled-components";
+import { color, fontSize } from "../../styles/styleHelpers";
 
 export const Container = styled.div`
-  width: 300px;
-  padding: 50px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  position: relative;
+  width: 100%;
+  margin-top: 130px;
 `;
 
-export const StyledButton = styled(Button)`
-  width: 100px !important;
+export const Section = styled.div`
+  min-height: 300px;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+`;
+
+export const Header = styled.h1`
+  font-size: ${fontSize("h1")};
+  margin-bottom: 20px;
+`;
+
+export const SongsContainer = styled.div`
+  width: 100%;
+  display: flex;
 `;
