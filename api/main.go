@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 type song struct {
@@ -14,8 +15,11 @@ type song struct {
 func main() {
 	app := fiber.New()
 
+	app.Use(cors.New(cors.Config{AllowOrigins: "http://localhost:5173"}))
+
 	songs := []song{
 		{Name: "Pisnicka", Author: "Vojtěch Novotný"},
+		{Name: "Hezka pisnicka", Author: "Michal Truksa"},
 	}
 
 	app.Get("/songs", func(c *fiber.Ctx) error {
