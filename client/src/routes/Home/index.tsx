@@ -1,18 +1,27 @@
 import { Container, Header, Section, SongsContainer } from "./styled";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Song from "../../components/Song";
 import SongImage1 from "../../assets/songImages/song1.jpg";
 
-async function getData() {
-  const data = await fetch("http://localhost:3000/songs");
-  return await data.json();
-}
-
 const Home = () => {
-  const songs = getData();
+  const [songs, setSongs] = useState<any[]>([]);
+
+  async function getData() {
+    const data = await fetch("http://localhost:3000/songs");
+    const parsedData = await data.json();
+    setSongs(parsedData.songs);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    console.log(songs);
+  }, [songs.length]);
 
   return (
     <Container>
@@ -30,67 +39,9 @@ const Home = () => {
           >
             {songs.length && songs.map(song => (
               <SplideSlide>
-                <Song image={SongImage1} header={song.name} text={song.author}>
-
-                </Song>
+                <Song image={SongImage1} header={song.Name} text={song.Author}></Song>
               </SplideSlide>
             ))}
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
-            <SplideSlide>
-              <Song
-                image={SongImage1}
-                header="Plná taška hulení"
-                text="Various Artists - Topic"
-              ></Song>
-            </SplideSlide>
           </Splide>
         </SongsContainer>
       </Section>
