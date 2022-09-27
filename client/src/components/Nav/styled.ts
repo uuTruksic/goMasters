@@ -11,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #bebebe;
+  background-color: ${color("background")};
 `;
 
 export const SearchContainer = styled.div`
@@ -23,6 +23,7 @@ export const SearchContainer = styled.div`
 
 export const StyledInput = styled(TextField)`
   margin-right: 40px !important;
+  width: 460px;
 
   input {
     color: white !important;

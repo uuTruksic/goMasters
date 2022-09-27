@@ -7,16 +7,20 @@ import theme from "./styles/defaultTheme";
 import GlobalStyle from "./styles/GlobalStyles";
 import Nav from "./components/Nav";
 import Menu from "./components/Menu";
+import { ThemeConfig } from "./config/theme.config";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-      <Nav />
-    </ThemeProvider>
+    <ThemeConfig>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Router />
+          <Nav />
+          <Menu />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ThemeConfig>
   </React.StrictMode>,
   document.getElementById("root")
 );

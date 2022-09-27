@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import Song from "../../components/Song";
 import SongImage1 from "../../assets/songImages/song1.jpg";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const [songs, setSongs] = useState<any[]>([]);
@@ -30,16 +31,20 @@ const Home = () => {
         <SongsContainer>
           <Splide
             options={{
-              perPage: 5,
+              perPage: 2,
               arrows: false,
               pagination: false,
               drag: "free",
-              gap: "1rem",
+              gap: "2rem",
             }}
           >
-            {songs.length && songs.map(song => (
-              <SplideSlide>
-                <Song image={SongImage1} header={song.Name} text={song.Author}></Song>
+            {songs.map((song) => (
+              <SplideSlide key={song.Name}>
+                <Song
+                  image={SongImage1}
+                  header={song.Name}
+                  text={song.Author}
+                />
               </SplideSlide>
             ))}
           </Splide>
