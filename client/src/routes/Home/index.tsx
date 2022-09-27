@@ -20,10 +20,6 @@ const Home = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(songs);
-  }, [songs.length]);
-
   return (
     <Container>
       <Section>
