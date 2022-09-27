@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import Song from "../../components/Song";
 import SongImage1 from "../../assets/songImages/song1.jpg";
-import { Button } from "@mui/material";
 
 const Home = () => {
   const [songs, setSongs] = useState<any[]>([]);
