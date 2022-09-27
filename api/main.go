@@ -26,5 +26,7 @@ func main() {
 		return c.JSON(map[string]interface{}{"songs": songs})
 	})
 
+	app.Post("/login", login)
+
 	log.Fatal(app.Listen(":3000"))
 }
