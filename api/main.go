@@ -41,5 +41,14 @@ func main() {
 
 	app.Post("/login", login)
 
+	app.Get("/users", func(c *fiber.Ctx) error {
+		users, err := Client.User.Query().Select().All(context.Background())
+		if err != nil {
+			log.Println(err)
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+		return c.JSON(users)
+	})
+
 	log.Fatal(app.Listen(":3000"))
 }
