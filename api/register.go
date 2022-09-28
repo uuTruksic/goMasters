@@ -23,12 +23,11 @@ func register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	user, err := Client.User.Query().Select().Where(user.Email("vojta.nvtn@gmail.com")).Only(context.Background())
+	_, err = Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
 	if err != nil {
 		log.Println(err)
-		return c.SendStatus(fiber.StatusInternalServerError)
+		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	log.Println(user)
 	return nil
 }

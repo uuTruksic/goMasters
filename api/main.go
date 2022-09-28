@@ -22,7 +22,8 @@ func main() {
 
 	app.Use(cors.New(cors.Config{AllowOrigins: "http://localhost:5173"}))
 
-	Client, err := ent.Open("mysql", "root:@tcp(localhost:3306)/spotilie?parseTime=true")
+	var err error
+	Client, err = ent.Open("mysql", "root:@tcp(localhost:3306)/spotilie?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
