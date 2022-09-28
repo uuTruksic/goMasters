@@ -8,6 +8,7 @@ import (
 	"net/mail"
 
 	"github.com/gofiber/fiber/v2"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type registerInput struct {
@@ -45,5 +46,17 @@ func register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	return nil
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(data.Password), bcrypt.DefaultCost)
+	if err != nil {
+		log.Println(err)
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	user, err := Client.User.Create().SetName(data.Name).SetEmail(data.Email).SetPassword(string(hashedPassword)).Save(context.Background())
+	if err != nil {
+		log.Println(err)
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	return c.JSON(user)
 }
