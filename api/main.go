@@ -15,6 +15,8 @@ type song struct {
 	Author string
 }
 
+var Client *ent.Client
+
 func main() {
 	app := fiber.New()
 

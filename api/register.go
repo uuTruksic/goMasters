@@ -1,6 +1,8 @@
 package main
 
 import (
+	"api/ent/user"
+	"context"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -20,5 +22,13 @@ func register(c *fiber.Ctx) error {
 		log.Println(err)
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
+
+	user, err := Client.User.Query().Select().Where(user.Email("vojta.nvtn@gmail.com")).Only(context.Background())
+	if err != nil {
+		log.Println(err)
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	log.Println(user)
 	return nil
 }
