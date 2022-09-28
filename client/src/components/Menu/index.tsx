@@ -6,7 +6,6 @@ import {
   LinkContainer,
   MenuCloseImg,
   MenuOpenImg,
-  MenuBackground,
   MenuContainer,
   HomeImg,
   AllSongsImg,
@@ -81,7 +80,6 @@ const Menu: React.FC<{}> = () => {
           </LinkContainer>
         ))}
       </MenuContainer>
-      <MenuBackground closeMenu={closeMenu} />
     </>
   );
 };

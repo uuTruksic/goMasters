@@ -9,7 +9,6 @@ export const MenuContainer = styled.div<{ closeMenu: boolean }>`
     rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0.3)
   );
-  backdrop-filter: blur(20px);
   width: 300px;
   min-height: 80%;
   left: 2%;
@@ -136,21 +135,20 @@ export const Link = styled.p`
   font-weight: 600;
 `;
 
-export const MenuBackground = styled.div<{ closeMenu: boolean }>`
-  position: absolute;
-  width: 300px;
-  height: 70px;
-  left: 2%;
-  top: calc(130px + 80% - 70px);
-  z-index: 0;
-  background-color: ${color("secondaryBackground")};
-  border-radius: 15px;
-  transition: 0.5s ease-in-out;
+// export const MenuBackground = styled.div<{ closeMenu: boolean }>`
+//   position: absolute;
+//   width: 300px;
+//   height: 70px;
+//   left: 2%;
+//   bottom: 0;
+//   background-color: ${color("secondaryBackground")};
+//   border-radius: 15px;
+//   transition: 0.5s ease-in-out;
 
-  ${({ closeMenu }: any) =>
-    closeMenu &&
-    `
-    transition: 0.5s ease-in;
-    width: 50px;
-    `}
-`;
+//   ${({ closeMenu }: any) =>
+//     closeMenu &&
+//     `
+//     transition: 0.5s ease-in;
+//     width: 50px;
+//     `}
+// `;

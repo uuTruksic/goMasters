@@ -1,21 +1,66 @@
+import { Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
 import React from "react";
+import { Container } from "./styled";
 
-const Login = () => {
+interface FormikValues {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC<FormikValues> = (FormikValues) => {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit(values, actions) {
+      alert(values.email + "\n" + values.password);
+      actions.resetForm({
+        errors: { password: "Wrong email or password" },
+        values: { email: values.email, password: "" },
+      });
+    },
+  });
+
   return (
-    <div>
+    <Container>
       <form
-        style={{
-          width: "50%",
-          height: "50%",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-        }}
+        onSubmit={formik.handleSubmit}
+        style={{ width: "100%", position: "relative" }}
       >
-        <input type="email"></input>
-        <input type="passowrd"></input>
+        <TextField
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          name="email"
+          margin="normal"
+          type={"email"}
+          variant="outlined"
+          label="E-mail"
+          required
+          fullWidth
+        ></TextField>
+        <TextField
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          name="password"
+          margin="normal"
+          type={"password"}
+          variant="outlined"
+          label="Password"
+          required
+          fullWidth
+        ></TextField>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ marginTop: "15px" }}
+          fullWidth
+        >
+          Odeslat
+        </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 
