@@ -1,9 +1,11 @@
 package main
 
 import (
+	"api/ent"
 	"api/ent/user"
 	"context"
 	"log"
+	"net/mail"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -23,9 +25,23 @@ func register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	_, err = Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
+	_, err = mail.ParseAddress(data.Email)
 	if err != nil {
 		log.Println(err)
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	foundUser, _ := Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
+	if foundUser != nil {
+		log.Println("User with email already exists")
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	if err != nil && !ent.IsNotFound(err) {
+		log.Println(err)
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+	if data.Password != data.ConfirmPassword || data.Password == "" {
+		log.Println("Passwords don't match")
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
