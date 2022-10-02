@@ -1,16 +1,16 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
-import { Container } from "./styled";
+import { Container, AvatarContainer } from "./styled";
 
-const Register = () => {
+import Avatar from "../../assets/icons/avatar_big.svg";
+
+const MyAccount = () => {
   const [error, setError] = useState(false);
   const initialState = {
     email: "",
     name: "",
     password: "",
-    confirmPassword: "",
   };
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, initialState);
@@ -33,7 +33,7 @@ const Register = () => {
   }
   return (
     <Container>
-      <h1>Registrace</h1>
+      <AvatarContainer imgUrl={Avatar ? Avatar : Avatar} />
       <form onSubmit={onSubmit}>
         <TextField
           name="email"
@@ -42,7 +42,6 @@ const Register = () => {
           type={"email"}
           variant="outlined"
           label="E-mail"
-          required
           fullWidth
         ></TextField>
         <TextField
@@ -52,7 +51,6 @@ const Register = () => {
           type={"text"}
           variant="outlined"
           label="Jméno"
-          required
           fullWidth
         ></TextField>
         <TextField
@@ -64,27 +62,14 @@ const Register = () => {
           type={"password"}
           variant="outlined"
           label="Heslo"
-          required
-          fullWidth
-        ></TextField>
-        <TextField
-          error={error}
-          name="confirmPassword"
-          onChange={onChange}
-          onFocus={() => setError(false)}
-          margin="normal"
-          type={"password"}
-          variant="outlined"
-          label="Potvrďte heslo"
-          required
           fullWidth
         ></TextField>
         <Button type="submit" variant="contained" style={{ marginTop: "15px" }} fullWidth>
-          Odeslat
+          potvrdit
         </Button>
       </form>
     </Container>
   );
 };
 
-export default Register;
+export default MyAccount;
