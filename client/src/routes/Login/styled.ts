@@ -6,7 +6,7 @@ export const Container = styled.div`
   top: 130px;
   left: calc(50%);
   transform: translateX(-50%);
-  width: 400px;
+  width: 500px;
   min-height: 80%;
   padding: 50px;
   text-align: center;
