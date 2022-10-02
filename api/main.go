@@ -44,5 +44,7 @@ func main() {
 
 	app.Post("/register", register)
 
+	app.Post("/login", login)
+
 	log.Fatal(app.Listen(":3000"))
 }

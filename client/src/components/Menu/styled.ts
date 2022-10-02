@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { color, fontSize } from "../../styles/styleHelpers";
 
-export const MenuContainer = styled.div<{ closeMenu: boolean }>`
+export const MenuContainer = styled.div<{
+  closeMenu: boolean | null | undefined;
+}>`
   position: fixed;
   text-align: center;
   padding: 100px 20px;
@@ -25,7 +27,9 @@ export const MenuContainer = styled.div<{ closeMenu: boolean }>`
     `}
 `;
 
-export const MenuCloseImg = styled.img<{ closeMenu: boolean }>`
+export const MenuCloseImg = styled.img<{
+  closeMenu: boolean | null | undefined;
+}>`
   position: absolute;
   right: 20px;
   top: 20px;
@@ -45,7 +49,9 @@ export const MenuCloseImg = styled.img<{ closeMenu: boolean }>`
     `}
 `;
 
-export const MenuOpenImg = styled.img<{ closeMenu: boolean }>`
+export const MenuOpenImg = styled.img<{
+  closeMenu: boolean | null | undefined;
+}>`
   position: absolute;
   left: 50%;
   transform: scale(0);
@@ -61,7 +67,7 @@ export const MenuOpenImg = styled.img<{ closeMenu: boolean }>`
     `}
 `;
 
-export const HomeImg = styled.img<{ closeMenu: boolean }>`
+export const HomeImg = styled.img<{ closeMenu: boolean | null | undefined }>`
   position: absolute;
   left: 50%;
   transform: scale(0);
@@ -77,7 +83,9 @@ export const HomeImg = styled.img<{ closeMenu: boolean }>`
     `}
 `;
 
-export const AllSongsImg = styled.img<{ closeMenu: boolean }>`
+export const AllSongsImg = styled.img<{
+  closeMenu: boolean | null | undefined;
+}>`
   position: absolute;
   left: 50%;
   top: 120px;
@@ -93,7 +101,9 @@ export const AllSongsImg = styled.img<{ closeMenu: boolean }>`
     `}
 `;
 
-export const FavoritesSongsImg = styled.img<{ closeMenu: boolean }>`
+export const FavoritesSongsImg = styled.img<{
+  closeMenu: boolean | null | undefined;
+}>`
   position: absolute;
   left: 50%;
   top: 160px;
@@ -109,7 +119,9 @@ export const FavoritesSongsImg = styled.img<{ closeMenu: boolean }>`
     `}
 `;
 
-export const LinkContainer = styled.div<{ closeMenu: boolean }>`
+export const LinkContainer = styled.div<{
+  closeMenu: boolean | null | undefined;
+}>`
   border-bottom: 1.5px solid ${color("secondaryBackground")};
   margin-bottom: 30px;
   transition: 0.5s;
@@ -134,21 +146,3 @@ export const Link = styled.p`
   font-size: ${fontSize("mainText")};
   font-weight: 600;
 `;
-
-// export const MenuBackground = styled.div<{ closeMenu: boolean }>`
-//   position: absolute;
-//   width: 300px;
-//   height: 70px;
-//   left: 2%;
-//   bottom: 0;
-//   background-color: ${color("secondaryBackground")};
-//   border-radius: 15px;
-//   transition: 0.5s ease-in-out;
-
-//   ${({ closeMenu }: any) =>
-//     closeMenu &&
-//     `
-//     transition: 0.5s ease-in;
-//     width: 50px;
-//     `}
-// `;

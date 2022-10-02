@@ -1,10 +1,18 @@
 import styled from "styled-components";
 import { color, fontSize } from "../../styles/styleHelpers";
 
-export const Container = styled.div`
+export const Container = styled.div<{ closeMenu: boolean | null | undefined }>`
   position: relative;
   margin: 130px 0 0 300px;
   margin-top: 130px;
+  transition: 0.5s ease-in-out;
+
+  ${({ closeMenu }: any) =>
+    closeMenu &&
+    `
+    margin-left: 50px;
+    transition: 0.5s ease-in;
+    `}
 `;
 
 export const Section = styled.div`

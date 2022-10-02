@@ -1,38 +1,35 @@
 import { Button, TextField } from "@mui/material";
-import { useFormik } from "formik";
-import React from "react";
-import { Container } from "./styled";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "../../utils/useForm";
+import { Container, RegisterButton, RegisterContainer } from "./styled";
 
-interface FormikValues {
-  email: string;
-  password: string;
-}
+const Login = () => {
+  const navigate = useNavigate();
+  const initialState = {
+    email: "",
+    password: "",
+  };
 
-const Login: React.FC<FormikValues> = (FormikValues) => {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit(values, actions) {
-      alert(values.email + "\n" + values.password);
-      actions.resetForm({
-        errors: { password: "Wrong email or password" },
-        values: { email: values.email, password: "" },
-      });
-    },
-  });
+  const { onChange, onSubmit, values } = useForm(loginUserCallback, initialState);
+
+  async function loginUserCallback() {
+    console.log(JSON.stringify(values));
+    fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    }).then((response) => {
+      console.log(response);
+    });
+  }
 
   return (
     <Container>
-      <form
-        onSubmit={formik.handleSubmit}
-        style={{ width: "100%", position: "relative" }}
-      >
+      <h1>Přihlášení</h1>
+      <form onSubmit={onSubmit}>
         <TextField
-          value={formik.values.email}
-          onChange={formik.handleChange}
           name="email"
+          onChange={onChange}
           margin="normal"
           type={"email"}
           variant="outlined"
@@ -41,9 +38,8 @@ const Login: React.FC<FormikValues> = (FormikValues) => {
           fullWidth
         ></TextField>
         <TextField
-          value={formik.values.password}
-          onChange={formik.handleChange}
           name="password"
+          onChange={onChange}
           margin="normal"
           type={"password"}
           variant="outlined"
@@ -51,15 +47,15 @@ const Login: React.FC<FormikValues> = (FormikValues) => {
           required
           fullWidth
         ></TextField>
-        <Button
-          type="submit"
-          variant="contained"
-          style={{ marginTop: "15px" }}
-          fullWidth
-        >
+        <Button type="submit" variant="contained" style={{ marginTop: "15px" }} fullWidth>
           Odeslat
         </Button>
       </form>
+      <RegisterContainer>
+        <RegisterButton onClick={() => navigate("/registrace")}>
+          <p>Zaregistruj se</p>
+        </RegisterButton>
+      </RegisterContainer>
     </Container>
   );
 };

@@ -18,15 +18,16 @@ const Nav = () => {
 
   return (
     <Container>
-      <img src={Logo} alt="Logo" />
+      <img src={Logo} alt="Logo" onClick={() => navigate("/")} />
       <SearchContainer>
-        <StyledInput variant="standard"></StyledInput>
+        <StyledInput
+          variant="standard"
+          placeholder="Najdi svoji oblíbenou songu"
+        ></StyledInput>
         <img src={FindImg} alt="Tlačítko pro vyhledávání" />
       </SearchContainer>
-      <AvatarContainer>
-        <AvatarName onClick={() => navigate("/prihlaseni")}>
-          Přihlásit se
-        </AvatarName>
+      <AvatarContainer onClick={() => navigate("/prihlaseni")}>
+        <AvatarName>Přihlásit se</AvatarName>
         <AvatarLine />
         <img src={Avatar} alt="Avatar" />
       </AvatarContainer>

@@ -8,6 +8,7 @@ import GlobalStyle from "./styles/GlobalStyles";
 import Nav from "./components/Nav";
 import Menu from "./components/Menu";
 import { ThemeConfig } from "./config/theme.config";
+import { MenuProvider } from "./providers/MenuProvider";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,9 +16,11 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <BrowserRouter>
-          <Router />
-          <Nav />
-          <Menu />
+          <MenuProvider>
+            <Router />
+            <Nav />
+            <Menu />
+          </MenuProvider>
         </BrowserRouter>
       </ThemeProvider>
     </ThemeConfig>

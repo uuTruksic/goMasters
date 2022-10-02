@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 import {
   Link,
@@ -17,6 +17,7 @@ import OpenMenuImg from "../../assets/icons/openMenu.svg";
 import HomeMenuImg from "../../assets/icons/home.svg";
 import AllSongsMenuImg from "../../assets/icons/allSongs.svg";
 import FavoritesSongsMenuImg from "../../assets/icons/favorites.svg";
+import { MenuContext } from "../../providers/MenuProvider";
 
 const menuLinksData = [
   {
@@ -36,51 +37,53 @@ const menuLinksData = [
   },
 ];
 
-const Menu: React.FC<{}> = () => {
+const Menu = () => {
   const navigate = useNavigate();
-  const [closeMenu, setCloseMenu] = useState(false);
+  const menuStatus = useContext(MenuContext);
 
   return (
-    <>
-      <MenuContainer closeMenu={closeMenu}>
-        <MenuCloseImg
-          closeMenu={closeMenu}
-          src={CrossImg}
-          onClick={() => setCloseMenu(!closeMenu)}
-          alt="Obrázek pro zavření menu"
-        />
-        <MenuOpenImg
-          closeMenu={closeMenu}
-          src={OpenMenuImg}
-          onClick={() => setCloseMenu(!closeMenu)}
-          alt="Obrázek pro otevření menu"
-        />
-        <HomeImg
-          closeMenu={closeMenu}
-          src={HomeMenuImg}
-          alt="Obrázek pro otevření menu"
-        />
-        <AllSongsImg
-          closeMenu={closeMenu}
-          src={AllSongsMenuImg}
-          alt="Obrázek pro otevření menu"
-        />
-        <FavoritesSongsImg
-          closeMenu={closeMenu}
-          src={FavoritesSongsMenuImg}
-          alt="Obrázek pro otevření menu"
-        />
-        {menuLinksData.map((prop) => (
-          <LinkContainer
-            closeMenu={closeMenu}
-            onClick={() => navigate(`${prop.url}`)}
-            key={prop.id}
-          >
-            <Link>{prop.text}</Link>
-          </LinkContainer>
-        ))}
-      </MenuContainer>
-    </>
+    <MenuContainer closeMenu={menuStatus?.closeMenu}>
+      <MenuCloseImg
+        closeMenu={menuStatus?.closeMenu}
+        src={CrossImg}
+        onClick={() => {
+          menuStatus?.setCloseMenu(!menuStatus.closeMenu);
+        }}
+        alt="Obrázek pro zavření menu"
+      />
+      <MenuOpenImg
+        closeMenu={menuStatus?.closeMenu}
+        src={OpenMenuImg}
+        onClick={() => {
+          menuStatus?.setCloseMenu(!menuStatus.closeMenu);
+        }}
+        alt="Obrázek pro otevření menu"
+      />
+      <HomeImg
+        closeMenu={menuStatus?.closeMenu}
+        src={HomeMenuImg}
+        alt="Obrázek pro otevření menu"
+      />
+      <AllSongsImg
+        closeMenu={menuStatus?.closeMenu}
+        src={AllSongsMenuImg}
+        alt="Obrázek pro otevření menu"
+      />
+      <FavoritesSongsImg
+        closeMenu={menuStatus?.closeMenu}
+        src={FavoritesSongsMenuImg}
+        alt="Obrázek pro otevření menu"
+      />
+      {menuLinksData.map((prop) => (
+        <LinkContainer
+          closeMenu={menuStatus?.closeMenu}
+          onClick={() => navigate(`${prop.url}`)}
+          key={prop.id}
+        >
+          <Link>{prop.text}</Link>
+        </LinkContainer>
+      ))}
+    </MenuContainer>
   );
 };
 
