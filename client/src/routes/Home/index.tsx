@@ -1,7 +1,8 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
+import useSWR from "swr";
 
 import Song from "../../components/Song";
 import { Container, Header, Section, SongsContainer } from "./styled";
@@ -9,24 +10,17 @@ import { Container, Header, Section, SongsContainer } from "./styled";
 import SongImage1 from "../../assets/songImages/song1.jpg";
 
 const Home = () => {
-  const [songs, setSongs] = useState<any[]>([]);
   const menuStatus = useContext(MenuContext);
+  const { data, error } = useSWR("/songs");
 
-  async function getData() {
-    const data = await fetch("http://localhost:3000/songs");
-    const parsedData = await data.json();
-    setSongs(parsedData.songs);
-  }
-
-  useEffect(() => {
-    getData();
-  }, []);
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading</div>
 
   return (
     <>
       <Container closeMenu={menuStatus?.closeMenu}>
         <Section>
-          <Header>Co práve frčí</Header>
+          <Header>Co právě frčí</Header>
           <SongsContainer>
             <Splide
               options={{
@@ -37,7 +31,7 @@ const Home = () => {
                 gap: "2rem",
               }}
             >
-              {songs.map((song) => (
+              {data.songs.map((song) => (
                 <SplideSlide key={song.Name}>
                   <Song
                     image={SongImage1}

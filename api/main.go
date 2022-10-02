@@ -39,6 +39,7 @@ func main() {
 	}
 
 	app.Get("/songs", func(c *fiber.Ctx) error {
+		log.Println(songs)
 		return c.JSON(map[string]interface{}{"songs": songs})
 	})
 

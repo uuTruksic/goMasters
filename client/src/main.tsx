@@ -9,9 +9,17 @@ import Nav from "./components/Nav";
 import Menu from "./components/Menu";
 import { ThemeConfig } from "./config/theme.config";
 import { MenuProvider } from "./providers/MenuProvider";
+import { SWRConfig } from "swr";
+
+export async function Fetcher(url: string) {
+  const req = await fetch(`http://localhost:3000${url}`);
+
+  return await req.json();
+}
 
 ReactDOM.render(
   <React.StrictMode>
+    <SWRConfig value={{fetcher: (url)=> Fetcher(url)}}>
     <ThemeConfig>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
@@ -24,6 +32,7 @@ ReactDOM.render(
         </BrowserRouter>
       </ThemeProvider>
     </ThemeConfig>
+    </SWRConfig>
   </React.StrictMode>,
   document.getElementById("root")
 );
