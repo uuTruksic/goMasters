@@ -13,14 +13,20 @@ const Login = () => {
   const { onChange, onSubmit, values } = useForm(loginUserCallback, initialState);
 
   async function loginUserCallback() {
-    console.log(JSON.stringify(values));
-    fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    }).then((response) => {
-      console.log(response);
-    });
+    try {
+      const res = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (res.status == 200) {
+        navigate("/");
+      }
+    } catch(e) {
+      console.log(e);
+      return;
+    }
   }
 
   return (

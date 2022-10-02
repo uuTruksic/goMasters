@@ -23,18 +23,22 @@ func login(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	foundUser, _ := Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
-	if foundUser != nil {
-		passCompare := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(data.Password))
-		if passCompare == nil {
-			fmt.Println("login succesfull")
-			return c.JSON(foundUser.Name)
-		} else {
-			fmt.Println("Wrong password")
-			return c.JSON("Wrong password")
-		}
-	} else {
+	foundUser, err := Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
+	if err != nil {
+		log.Println(err)
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	if foundUser == nil {
 		fmt.Println("Wrong e-mail")
-		return c.JSON("Wrong e-mail")
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	passCompare := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(data.Password))
+	if passCompare == nil {
+		fmt.Println("login succesfull")
+		return c.SendStatus(fiber.StatusOK)
+	} else {
+		fmt.Println("Wrong password")
+		return c.SendStatus(fiber.StatusBadRequest)
 	}
 }
