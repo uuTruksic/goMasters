@@ -23,7 +23,7 @@ const Login = () => {
       if (res.status == 200) {
         navigate("/");
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return;
     }
@@ -59,7 +59,7 @@ const Login = () => {
       </form>
       <RegisterContainer>
         <RegisterButton onClick={() => navigate("/registrace")}>
-          <p>Zaregistruj se</p>
+          <p>ZAREGISTRUJ SE</p>
         </RegisterButton>
       </RegisterContainer>
     </Container>

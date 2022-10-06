@@ -2,10 +2,12 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
-import { Container } from "./styled";
+import { Container, LoginButton, LoginContainer } from "./styled";
 
 const Register = () => {
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
+
   const initialState = {
     email: "",
     name: "",
@@ -18,8 +20,21 @@ const Register = () => {
   async function loginUserCallback() {
     // @ts-ignore
     if (values.password === values.confirmPassword && values.password.length > 8) {
-      console.log(values);
       setError(false);
+      try {
+        const res = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        });
+
+        if (res.status == 200) {
+          navigate("/prihlaseni");
+        }
+      } catch (e) {
+        console.log(e);
+        return;
+      }
       //send values
 
       // @ts-ignore
@@ -83,6 +98,11 @@ const Register = () => {
           Odeslat
         </Button>
       </form>
+      <LoginContainer>
+        <LoginButton onClick={() => navigate("/prihlaseni")}>
+          <p>PŘIHLAŠ SE</p>
+        </LoginButton>
+      </LoginContainer>
     </Container>
   );
 };
