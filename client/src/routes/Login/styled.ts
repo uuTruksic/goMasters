@@ -29,6 +29,7 @@ export const RegisterButton = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-size: 14px;
 
   :hover {
     opacity: 0.7;
