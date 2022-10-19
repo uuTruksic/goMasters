@@ -36,7 +36,12 @@ func login(c *fiber.Ctx) error {
 	passCompare := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(data.Password))
 	if passCompare == nil {
 		fmt.Println("login succesfull")
-		return c.SendStatus(fiber.StatusOK)
+		session, err := Client.Session.Create().SetToken("").SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
+		if err != nil {
+			log.Print(err)
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+		return c.JSON(fiber.Map{"session": session.Token})
 	} else {
 		fmt.Println("Wrong password")
 		return c.SendStatus(fiber.StatusBadRequest)
