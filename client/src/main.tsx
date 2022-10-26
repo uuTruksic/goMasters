@@ -11,27 +11,39 @@ import { ThemeConfig } from "./config/theme.config";
 import { MenuProvider } from "./providers/MenuProvider";
 import { SWRConfig } from "swr";
 
-export async function Fetcher(url: string) {
-  const req = await fetch(`http://localhost:3000${url}`);
+export async function Fetcher(url: string, token: string) {
+  const req = await fetch(`http://localhost:3000${url}`, {
+    headers: {
+      Authorization: `token ${token}`,
+    },
+  });
 
   return await req.json();
 }
 
+function GetSession() {
+  let session = localStorage.getItem("session");
+  if (!session) {
+    return "";
+  }
+  return session;
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <SWRConfig value={{fetcher: (url)=> Fetcher(url)}}>
-    <ThemeConfig>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <BrowserRouter>
-          <MenuProvider>
-            <Router />
-            <Nav />
-            <Menu />
-          </MenuProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </ThemeConfig>
+    <SWRConfig value={{ fetcher: (url) => Fetcher(url, GetSession()) }}>
+      <ThemeConfig>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <BrowserRouter>
+            <MenuProvider>
+              <Router />
+              <Nav />
+              <Menu />
+            </MenuProvider>
+          </BrowserRouter>
+        </ThemeProvider>
+      </ThemeConfig>
     </SWRConfig>
   </React.StrictMode>,
   document.getElementById("root")

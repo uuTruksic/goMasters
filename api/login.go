@@ -1,11 +1,15 @@
 package main
 
 import (
+	"api/ent"
+	"api/ent/session"
 	"api/ent/user"
 	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"log"
+	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -19,12 +23,54 @@ func GenerateSecureToken(length int) string {
 	return hex.EncodeToString(b)
 }
 
+func GetLogedSession(c *fiber.Ctx) *ent.Session {
+	data := c.Get("Authorization")
+	if len(data) == 0 {
+		return nil
+	}
+	token := strings.Split(data, " ")
+
+	if len(token) < 2 {
+		return nil
+	}
+
+	if token[0] != "token" {
+		return nil
+	}
+	session, err := Client.Session.Query().Where(session.Token(token[1])).WithUser().Only(c.Context())
+
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+
+	return session
+}
+
+func GetLoggedUser(c *fiber.Ctx) *ent.User {
+	session := GetLogedSession(c)
+	if session == nil {
+		return nil
+	}
+	user, err := session.Edges.UserOrErr()
+	if err != nil {
+		return nil
+	}
+	_, err = session.Update().SetUsed(session.Used + 1).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUpdatedAt(time.Now()).Save(c.Context())
+	if err != nil {
+		return nil
+	}
+
+	return user
+}
+
 type loginInput struct {
 	Email    string `json:"email" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
 
 func login(c *fiber.Ctx) error {
+
 	data := loginInput{}
 	err := c.BodyParser(&data)
 	if err != nil {
@@ -44,8 +90,10 @@ func login(c *fiber.Ctx) error {
 
 	passCompare := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(data.Password))
 	if passCompare == nil {
+		token := GenerateSecureToken(64)
+		session, err := Client.Session.Create().SetToken(token).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
 		log.Println("login succesfull")
-		session, err := Client.Session.Create().SetToken("").SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
+
 		if err != nil {
 			log.Print(err)
 			return c.SendStatus(fiber.StatusBadRequest)
@@ -55,15 +103,4 @@ func login(c *fiber.Ctx) error {
 		log.Println("Wrong password")
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
-	token := GenerateSecureToken(64)
-
-	_, err = Client.Session.Create().SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetToken(token).SetUsed(0).SetUser(foundUser).Save(c.Context())
-	if err != nil {
-		log.Println(err)
-		return c.SendStatus(fiber.StatusInternalServerError)
-	}
-
-	return c.JSON(fiber.Map{
-		"token": token,
-	})
 }

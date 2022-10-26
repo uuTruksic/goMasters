@@ -39,6 +39,11 @@ func main() {
 	}
 
 	app.Get("/songs", func(c *fiber.Ctx) error {
+		loggedUser := GetLoggedUser(c)
+		if loggedUser == nil {
+			return c.SendStatus(fiber.StatusForbidden)
+		}
+
 		log.Println(songs)
 		return c.JSON(map[string]interface{}{"songs": songs})
 	})

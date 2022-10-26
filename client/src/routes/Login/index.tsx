@@ -21,6 +21,8 @@ const Login = () => {
       });
 
       if (res.status == 200) {
+        const session = await res.json();
+        localStorage.setItem("session", session.session);
         navigate("/");
       }
     } catch (e) {
