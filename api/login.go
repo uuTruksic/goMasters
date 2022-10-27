@@ -70,7 +70,6 @@ type loginInput struct {
 }
 
 func login(c *fiber.Ctx) error {
-
 	data := loginInput{}
 	err := c.BodyParser(&data)
 	if err != nil {

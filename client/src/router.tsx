@@ -1,3 +1,4 @@
+import { Logout } from "@mui/icons-material";
 import { Route, Routes } from "react-router-dom";
 
 import Home from "./routes/Home";
@@ -11,6 +12,7 @@ const Router = () => (
     <Route path="/prihlaseni" element={<Login />} />
     <Route path="/registrace" element={<Register />} />
     <Route path="/nastaveni-uctu" element={<MyAccount />} />
+    <Route path="/odhlaseni" element={<Logout />} />
   </Routes>
 );
 

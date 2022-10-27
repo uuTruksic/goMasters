@@ -18,7 +18,16 @@ export async function Fetcher(url: string, token: string) {
     },
   });
 
+  if (req.status == 403) {
+    EmergencyLogOut();
+  }
+
   return await req.json();
+}
+
+function EmergencyLogOut() {
+  localStorage.removeItem("session");
+  location.replace("/prihlaseni");
 }
 
 function GetSession() {

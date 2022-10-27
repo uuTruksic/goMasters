@@ -13,8 +13,8 @@ const Home = () => {
   const menuStatus = useContext(MenuContext);
   const { data, error } = useSWR("/songs");
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading</div>
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading</div>;
 
   return (
     <>
@@ -33,11 +33,7 @@ const Home = () => {
             >
               {data.songs.map((song) => (
                 <SplideSlide key={song.Name}>
-                  <Song
-                    image={SongImage1}
-                    header={song.Name}
-                    text={song.Author}
-                  />
+                  <Song image={SongImage1} header={song.Name} text={song.Author} />
                 </SplideSlide>
               ))}
             </Splide>
