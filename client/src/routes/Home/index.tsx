@@ -8,39 +8,38 @@ import Song from "../../components/Song";
 import { Container, Header, Section, SongsContainer } from "./styled";
 
 import SongImage1 from "../../assets/songImages/song1.jpg";
+import { SongInterface } from "../../interfaces";
 
 const Home = () => {
   const menuStatus = useContext(MenuContext);
-  const { data, error } = useSWR("/songs");
+  const { data, error } = useSWR<{ songs: SongInterface[] }, Error>("/song");
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading</div>;
 
   return (
-    <>
-      <Container closeMenu={menuStatus?.closeMenu}>
-        <Section>
-          <Header>Co právě frčí</Header>
-          <SongsContainer>
-            <Splide
-              options={{
-                perPage: 2,
-                arrows: false,
-                pagination: false,
-                drag: "free",
-                gap: "2rem",
-              }}
-            >
-              {data.songs.map((song) => (
-                <SplideSlide key={song.Name}>
-                  <Song image={SongImage1} header={song.Name} text={song.Author} />
-                </SplideSlide>
-              ))}
-            </Splide>
-          </SongsContainer>
-        </Section>
-      </Container>
-    </>
+    <Container closeMenu={menuStatus?.closeMenu}>
+      <Section>
+        <Header>Co právě frčí</Header>
+        <SongsContainer>
+          <Splide
+            options={{
+              perPage: 2,
+              arrows: false,
+              pagination: false,
+              drag: "free",
+              gap: "2rem",
+            }}
+          >
+            {data.songs.map((song, index) => (
+              <SplideSlide key={index}>
+                <Song image={SongImage1} header={song.name} text={song.author} />
+              </SplideSlide>
+            ))}
+          </Splide>
+        </SongsContainer>
+      </Section>
+    </Container>
   );
 };
 

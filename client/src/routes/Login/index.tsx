@@ -14,7 +14,7 @@ const Login = () => {
 
   async function loginUserCallback() {
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -35,26 +35,8 @@ const Login = () => {
     <Container>
       <h1>Přihlášení</h1>
       <form onSubmit={onSubmit}>
-        <TextField
-          name="email"
-          onChange={onChange}
-          margin="normal"
-          type={"email"}
-          variant="outlined"
-          label="E-mail"
-          required
-          fullWidth
-        ></TextField>
-        <TextField
-          name="password"
-          onChange={onChange}
-          margin="normal"
-          type={"password"}
-          variant="outlined"
-          label="Password"
-          required
-          fullWidth
-        ></TextField>
+        <TextField name="email" onChange={onChange} margin="normal" type={"email"} variant="outlined" label="E-mail" required fullWidth></TextField>
+        <TextField name="password" onChange={onChange} margin="normal" type={"password"} variant="outlined" label="Password" required fullWidth></TextField>
         <Button type="submit" variant="contained" style={{ marginTop: "15px" }} fullWidth>
           Odeslat
         </Button>

@@ -4,13 +4,13 @@ import { useForm } from "../../utils/useForm";
 import { Container, AvatarContainer } from "./styled";
 
 import Avatar from "../../assets/icons/avatar_big.svg";
+import { GetSession } from "../../utils/getSession";
 
 async function LogOut() {
   try {
-    const token = localStorage.getItem("session");
     const req = await fetch("http://localhost:3000/logout", {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: `token ${GetSession()}`,
       },
     });
     localStorage.removeItem("session");

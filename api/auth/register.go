@@ -1,11 +1,12 @@
-package main
+package auth
 
 import (
-	"api/ent"
-	"api/ent/user"
 	"context"
 	"log"
 	"net/mail"
+	"spotilie-api/db"
+	"spotilie-api/ent"
+	"spotilie-api/ent/user"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -18,7 +19,7 @@ type registerInput struct {
 	ConfirmPassword string `json:"confirmPassword" validate:"required"`
 }
 
-func register(c *fiber.Ctx) error {
+func Register(c *fiber.Ctx) error {
 	data := registerInput{}
 	err := c.BodyParser(&data)
 	if err != nil {
@@ -32,7 +33,7 @@ func register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	foundUser, _ := Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
+	foundUser, _ := db.Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
 	if foundUser != nil {
 		log.Println("User with email already exists")
 		return c.SendStatus(fiber.StatusBadRequest)
@@ -52,7 +53,7 @@ func register(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	user, err := Client.User.Create().SetName(data.Name).SetEmail(data.Email).SetPassword(string(hashedPassword)).Save(context.Background())
+	user, err := db.Client.User.Create().SetName(data.Name).SetEmail(data.Email).SetPassword(string(hashedPassword)).Save(context.Background())
 	if err != nil {
 		log.Println(err)
 		return c.SendStatus(fiber.StatusInternalServerError)

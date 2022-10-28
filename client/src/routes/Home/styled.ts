@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color, fontSize } from "../../styles/styleHelpers";
+import { fontSize } from "../../styles/styleHelpers";
 
 export const Container = styled.div<{ closeMenu: boolean | null | undefined }>`
   position: relative;

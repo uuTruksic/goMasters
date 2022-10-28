@@ -1,4 +1,4 @@
-module api
+module spotilie-api
 
 go 1.19
 

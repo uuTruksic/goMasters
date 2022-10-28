@@ -1,13 +1,14 @@
-package main
+package auth
 
 import (
-	"api/ent"
-	"api/ent/session"
-	"api/ent/user"
 	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"log"
+	"spotilie-api/db"
+	"spotilie-api/ent"
+	"spotilie-api/ent/session"
+	"spotilie-api/ent/user"
 	"strings"
 	"time"
 
@@ -23,7 +24,7 @@ func GenerateSecureToken(length int) string {
 	return hex.EncodeToString(b)
 }
 
-func GetLogedSession(c *fiber.Ctx) *ent.Session {
+func GetLoggedSession(c *fiber.Ctx) *ent.Session {
 	data := c.Get("Authorization")
 	if len(data) == 0 {
 		return nil
@@ -37,7 +38,7 @@ func GetLogedSession(c *fiber.Ctx) *ent.Session {
 	if token[0] != "token" {
 		return nil
 	}
-	session, err := Client.Session.Query().Where(session.Token(token[1])).WithUser().Only(c.Context())
+	session, err := db.Client.Session.Query().Where(session.Token(token[1])).WithUser().Only(c.Context())
 
 	if err != nil {
 		log.Println(err)
@@ -48,7 +49,7 @@ func GetLogedSession(c *fiber.Ctx) *ent.Session {
 }
 
 func GetLoggedUser(c *fiber.Ctx) *ent.User {
-	session := GetLogedSession(c)
+	session := GetLoggedSession(c)
 	if session == nil {
 		return nil
 	}
@@ -69,7 +70,7 @@ type loginInput struct {
 	Password string `json:"password" validate:"required"`
 }
 
-func login(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx) error {
 	data := loginInput{}
 	err := c.BodyParser(&data)
 	if err != nil {
@@ -77,7 +78,7 @@ func login(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	foundUser, err := Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
+	foundUser, err := db.Client.User.Query().Select().Where(user.Email(data.Email)).Only(context.Background())
 	if err != nil {
 		log.Println(err)
 		return c.SendStatus(fiber.StatusBadRequest)
@@ -90,7 +91,7 @@ func login(c *fiber.Ctx) error {
 	passCompare := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(data.Password))
 	if passCompare == nil {
 		token := GenerateSecureToken(64)
-		session, err := Client.Session.Create().SetToken(token).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
+		session, err := db.Client.Session.Create().SetToken(token).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
 		log.Println("login succesfull")
 
 		if err != nil {

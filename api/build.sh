@@ -1,0 +1,1 @@
+go build ./build/spotilie-api-server ./ && ./build/spotilie-api-server

@@ -1,0 +1,1 @@
+go build -o ./build/spotilie-api-server.exe .\ && ./build/spotilie-api-server.exe

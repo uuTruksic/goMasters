@@ -10,33 +10,8 @@ import Menu from "./components/Menu";
 import { ThemeConfig } from "./config/theme.config";
 import { MenuProvider } from "./providers/MenuProvider";
 import { SWRConfig } from "swr";
-
-export async function Fetcher(url: string, token: string) {
-  const req = await fetch(`http://localhost:3000${url}`, {
-    headers: {
-      Authorization: `token ${token}`,
-    },
-  });
-
-  if (req.status == 403) {
-    EmergencyLogOut();
-  }
-
-  return await req.json();
-}
-
-function EmergencyLogOut() {
-  localStorage.removeItem("session");
-  location.replace("/prihlaseni");
-}
-
-function GetSession() {
-  let session = localStorage.getItem("session");
-  if (!session) {
-    return "";
-  }
-  return session;
-}
+import { Fetcher } from "./network";
+import { GetSession } from "./utils/getSession";
 
 ReactDOM.render(
   <React.StrictMode>
