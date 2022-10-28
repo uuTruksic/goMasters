@@ -1,10 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import Menu from "../components/Menu";
 
-interface MenuProp {
-  isMenuOpened: boolean;
-}
-
 type MenuContextType = {
   closeMenu: boolean | null;
   setCloseMenu: React.Dispatch<React.SetStateAction<boolean | null>>;

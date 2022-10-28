@@ -12,6 +12,7 @@ import { MenuProvider } from "./providers/MenuProvider";
 import { SWRConfig } from "swr";
 import { Fetcher } from "./network";
 import { GetSession } from "./utils/getSession";
+import { UserContextProvider } from "./context/user";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,11 +21,13 @@ ReactDOM.render(
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <BrowserRouter>
+          <UserContextProvider>
             <MenuProvider>
               <Router />
               <Nav />
               <Menu />
             </MenuProvider>
+            </UserContextProvider>
           </BrowserRouter>
         </ThemeProvider>
       </ThemeConfig>
