@@ -1,12 +1,14 @@
 const theme = {
   colors: {
-    background: "#051726",
-    secondaryBackground: "#81FFD9",
+    background: "#282828",
+    secondaryBackground: "#181818",
+    textPrimary: "#FAFAFA",
+    textSecondary: "#B3B3B3",
   },
   fontSizes: {
-    h1: "40px",
-    mainText: "18px",
-    classicText: "14px",
+    h1: "32px",
+    primaryText: "18px",
+    secondaryText: "14px",
   },
 };
 

@@ -9,10 +9,10 @@ import Register from "./routes/Register";
 const Router = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/prihlaseni" element={<Login />} />
-    <Route path="/registrace" element={<Register />} />
-    <Route path="/nastaveni-uctu" element={<MyAccount />} />
-    <Route path="/odhlaseni" element={<Logout />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+    <Route path="/my-account" element={<MyAccount />} />
+    <Route path="/logoff" element={<Logout />} />
   </Routes>
 );
 

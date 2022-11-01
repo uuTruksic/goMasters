@@ -14,8 +14,8 @@ const Home = () => {
   const menuStatus = useContext(MenuContext);
   const { data, error } = useSWR<{ songs: SongInterface[] }, Error>("/song");
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading</div>;
+  if (error) return <div></div>; //skeletons
+  if (!data) return <div></div>;
 
   return (
     <Container closeMenu={menuStatus?.closeMenu}>

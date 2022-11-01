@@ -1,8 +1,8 @@
-import { AvatarContainer, AvatarLine, AvatarName, Container, SearchContainer, StyledInput } from "./styled";
+import { AvatarContainer, AvatarName, Container, LogAndRegContainer, LoginButton, RegisterButton, SearchButton, SearchContainer, SearchInput } from "./styled";
 
 import Logo from "../../assets/icons/logo.svg";
-import Avatar from "../../assets/icons/avatar.svg";
 import FindImg from "../../assets/icons/find.svg";
+import Avatar from "../../assets/icons/avatar.svg";
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
@@ -12,14 +12,22 @@ const Nav = () => {
     <Container>
       <img src={Logo} alt="Logo" onClick={() => navigate("/")} />
       <SearchContainer>
-        <StyledInput variant="standard" placeholder="Najdi svoji oblíbenou songu"></StyledInput>
-        <img src={FindImg} alt="Tlačítko pro vyhledávání" />
+        <SearchButton>
+          <img src={FindImg} alt="Logo" onClick={() => navigate("/")} />
+        </SearchButton>
+        <SearchInput placeholder="Vyhledat"></SearchInput>
       </SearchContainer>
-      <AvatarContainer>
-        <AvatarName onClick={() => navigate("/prihlaseni")}>Přihlásit se</AvatarName>
-        <AvatarLine />
-        <img src={Avatar} alt="Avatar" onClick={() => navigate("/nastaveni-uctu")} />
-      </AvatarContainer>
+      {localStorage.getItem("session") ? (
+        <AvatarContainer onClick={() => navigate("/my-account")}>
+          <img src={Avatar} alt="Avatar" onClick={() => navigate("/nastaveni-uctu")} />
+          <AvatarName onClick={() => navigate("/prihlaseni")}>Michal Truksa</AvatarName>
+        </AvatarContainer>
+      ) : (
+        <LogAndRegContainer>
+          <RegisterButton onClick={() => navigate("/register")}>Registrovat se</RegisterButton>
+          <LoginButton onClick={() => navigate("/login")}>Přihlásit se</LoginButton>
+        </LogAndRegContainer>
+      )}
     </Container>
   );
 };
