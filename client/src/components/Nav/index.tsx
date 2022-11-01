@@ -4,8 +4,10 @@ import Logo from "../../assets/icons/logo.svg";
 import FindImg from "../../assets/icons/find.svg";
 import Avatar from "../../assets/icons/avatar.svg";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/user";
 
 const Nav = () => {
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   return (

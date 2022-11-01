@@ -2,8 +2,10 @@ import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
 import { Container, RegisterButton, RegisterContainer } from "./styled";
+import { useUserContext } from "../../context/user";
 
 const Login = () => {
+  const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const initialState = {
     email: "",
@@ -21,9 +23,10 @@ const Login = () => {
       });
 
       if (res.status == 200) {
-        const session = await res.json();
-        localStorage.setItem("session", session.session);
+        const user = await res.json();
+        localStorage.setItem("session", user.session);
         navigate("/");
+        setUser({ name: user.name });
       }
     } catch (e) {
       console.log(e);

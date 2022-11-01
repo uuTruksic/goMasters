@@ -10,6 +10,7 @@ import { MenuProvider } from "./providers/MenuProvider";
 import { SWRConfig } from "swr";
 import { Fetcher } from "./network";
 import { GetSession } from "./utils/getSession";
+import { UserContextProvider } from "./context/user";
 
 ReactDOM.render(
   <React.StrictMode>

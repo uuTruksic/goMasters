@@ -98,7 +98,7 @@ func Login(c *fiber.Ctx) error {
 			log.Print(err)
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
-		return c.JSON(fiber.Map{"session": session.Token})
+		return c.JSON(fiber.Map{"name": foundUser.Name, "session": session.Token})
 	} else {
 		log.Println("Wrong password")
 		return c.SendStatus(fiber.StatusBadRequest)

@@ -12,7 +12,7 @@ import { SongInterface } from "../../interfaces";
 
 const Home = () => {
   const menuStatus = useContext(MenuContext);
-  const { data, error } = useSWR<{ songs: SongInterface[] }, Error>("/song");
+  const { data, error } = useSWR<SongInterface[], Error>("/song");
 
   if (error) return <div></div>; //skeletons
   if (!data) return <div></div>;
@@ -31,7 +31,7 @@ const Home = () => {
               gap: "2rem",
             }}
           >
-            {data.songs.map((song, index) => (
+            {data.map((song, index) => (
               <SplideSlide key={index}>
                 <Song image={SongImage1} header={song.name} text={song.author} />
               </SplideSlide>
