@@ -27,31 +27,31 @@ async function LogOut() {
 const MyAccount = () => {
   const [error, setError] = useState(false);
 
-  async function loginUserCallback() {
-    // @ts-ignore
-    if (values.password === values.confirmPassword && values.password.length > 8) {
-      console.log(values);
-      setError(false);
-      //send values
-
-      // @ts-ignore
-    } else if (values.password.length < 8) {
-      alert("Heslo musí obsahovat alespoň 8 znaků");
-      setError(true);
-    } else {
-      alert("Heslo se neshoduje");
-      setError(true);
-    }
-  }
-
   const navigate = useNavigate();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const initialState = {
     email: user.email,
     name: user.name,
   };
 
-  const { onChange, onSubmit, values } = useForm<User>(loginUserCallback, initialState);
+  const { onChange, onSubmit, values } = useForm<User>(changeUserData, initialState);
+
+  async function changeUserData() {
+    try {
+      const res = await fetch("http://localhost:3000/user/change-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `token ${GetSession()}`
+        },
+        body: JSON.stringify(values)
+      });
+      const user: User = await res.json();
+      setUser(user);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <Container>
