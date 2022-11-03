@@ -5,4 +5,5 @@ export interface SongInterface {
 
 export interface User {
   name: string;
+  email: string;
 }

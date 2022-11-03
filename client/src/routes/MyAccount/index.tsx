@@ -1,3 +1,5 @@
+import type { User } from "../../interfaces";
+
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "../../utils/useForm";
@@ -6,6 +8,7 @@ import { AvatarImg, ChangePassButton, Container, FormContainer, Header, HiddenIm
 import avatar from "../../assets/icons/avatar.svg";
 import { GetSession } from "../../utils/getSession";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/user";
 
 async function LogOut() {
   try {
@@ -23,13 +26,6 @@ async function LogOut() {
 
 const MyAccount = () => {
   const [error, setError] = useState(false);
-  const initialState = {
-    email: "",
-    name: "",
-    password: "",
-  };
-
-  const { onChange, onSubmit, values } = useForm(loginUserCallback, initialState);
 
   async function loginUserCallback() {
     // @ts-ignore
@@ -49,6 +45,13 @@ const MyAccount = () => {
   }
 
   const navigate = useNavigate();
+  const { user } = useUserContext();
+  const initialState = {
+    email: user.email,
+    name: user.name,
+  };
+
+  const { onChange, onSubmit, values } = useForm<User>(loginUserCallback, initialState);
 
   return (
     <Container>
@@ -60,8 +63,8 @@ const MyAccount = () => {
         <div>
           <Header>Můj účet</Header>
           <form onSubmit={onSubmit}>
-            <SearchInput name="name" onChange={onChange} type={"text"} placeholder="Jméno a příjmení" />
-            <SearchInput name="email" onChange={onChange} type={"email"} placeholder="E-mail" />
+            <SearchInput name="name" onChange={onChange} type={"text"} placeholder="Jméno a příjmení" value={values.name} />
+            <SearchInput name="email" onChange={onChange} type={"email"} placeholder="E-mail" value={values.email} />
             <ChangePassButton onClick={() => navigate("/change-password")}>Změnit heslo</ChangePassButton>
           </form>
         </div>

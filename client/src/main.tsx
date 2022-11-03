@@ -19,8 +19,10 @@ ReactDOM.render(
         <GlobalStyle />
         <BrowserRouter>
           <MenuProvider>
-            <Router />
-            <Nav />
+            <UserContextProvider>
+              <Router />
+              <Nav />
+            </UserContextProvider>
           </MenuProvider>
         </BrowserRouter>
       </ThemeProvider>

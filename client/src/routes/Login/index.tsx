@@ -25,7 +25,7 @@ const Login = () => {
         const user = await res.json();
         localStorage.setItem("session", user.session);
         navigate("/");
-        setUser({ name: user.name });
+        setUser({ name: user.name, email: user.email });
       }
     } catch (e) {
       console.log(e);

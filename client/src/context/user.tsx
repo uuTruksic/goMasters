@@ -13,7 +13,7 @@ interface UserContext {
 const [useUserContext, UserProvider] = createGenericContext<UserContext>();
 
 const UserContextProvider: FC<{children: JSX.Element | JSX.Element[]}> = ({ children }) => {
-    const [user, setUser] = useState<User>({ name: "" });
+    const [user, setUser] = useState<User>({ name: "", email: "" });
 
     return (
         <UserProvider value={{ user: user, setUser: setUser }}>

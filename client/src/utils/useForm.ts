@@ -1,6 +1,7 @@
+import { ChangeEvent, FormEvent } from "react";
 import { useState } from "react";
 
-export const useForm = (callback: any, initialState = {}) => {
+export function useForm<T>(callback: () => void, initialState: T): { onChange: (e: ChangeEvent<HTMLInputElement>) => void, onSubmit: (e: FormEvent<HTMLFormElement>) => void, values: T} {
   const [values, setValues] = useState(initialState);
 
   // onChange
