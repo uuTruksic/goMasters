@@ -12,8 +12,8 @@ const Song: FC<SongProps> = ({ image, header, text }) => {
     <SongContainer>
       <Image url={image} />
       <TextContainer>
-        <Header>{header}Čo ti jebe</Header>
-        <Text>{text}Rytmus</Text>
+        <Header>{header}</Header>
+        <Text>{text}</Text>
       </TextContainer>
     </SongContainer>
   );

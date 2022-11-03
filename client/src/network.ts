@@ -14,5 +14,4 @@ export async function Fetcher(url: string, token: string) {
 
 export function EmergencyLogOut() {
   localStorage.removeItem("session");
-  location.replace("/prihlaseni");
 }

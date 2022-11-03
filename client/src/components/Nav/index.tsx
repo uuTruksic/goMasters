@@ -22,7 +22,7 @@ const Nav = () => {
       {localStorage.getItem("session") ? (
         <AvatarContainer onClick={() => navigate("/my-account")}>
           <img src={Avatar} alt="Avatar" onClick={() => navigate("/nastaveni-uctu")} />
-          <AvatarName onClick={() => navigate("/prihlaseni")}>Michal Truksa</AvatarName>
+          <AvatarName onClick={() => navigate("/login")}>Michal Truksa</AvatarName>
         </AvatarContainer>
       ) : (
         <LogAndRegContainer>

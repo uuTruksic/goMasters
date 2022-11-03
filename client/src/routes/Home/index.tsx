@@ -32,7 +32,7 @@ const Home = () => {
               gap: "1rem",
             }}
           >
-            {data.songs.map((song: any, index: number) => (
+            {data.map((song: any, index: number) => (
               <SplideSlide key={index}>
                 <Song image={SongImage1} header={song.name} text={song.author} />
               </SplideSlide>
