@@ -8,26 +8,8 @@ export const Container = styled.div`
   border-radius: 20px;
   transform: translateX(-50%) translateY(-50%);
   padding: 50px;
-  width: 700px;
+  width: 500px;
   background-color: #2d2d2d;
-`;
-
-export const AvatarImg = styled.img`
-  width: 200px;
-  height: 200px;
-`;
-
-export const HiddenImageInput = styled.input`
-  display: none;
-`;
-
-export const FormContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  gap: 2rem;
 `;
 
 export const Header = styled.h1`
@@ -52,7 +34,7 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const MainButton = styled.button`
+export const LoginButton = styled.button`
   width: 100%;
   height: 40px;
   outline: none;
@@ -71,30 +53,4 @@ export const MainButton = styled.button`
     opacity: 0.7;
     transition: 0.2s;
   }
-`;
-
-export const SecondaryButton = styled.div`
-  width: 100%;
-  height: 40px;
-  outline: none;
-  border: none;
-  margin-top: 10px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #616161;
-  color: ${color("textPrimary")};
-  font-size: 16px;
-
-  :hover {
-    cursor: pointer;
-    opacity: 0.7;
-    transition: 0.2s;
-  }
-`;
-
-export const ChangePassButton = styled(SecondaryButton)`
-  width: 130px;
-  border-radius: 5px;
 `;

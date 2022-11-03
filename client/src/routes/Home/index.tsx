@@ -13,14 +13,15 @@ import { SongInterface } from "../../interfaces";
 const Home = () => {
   const menuStatus = useContext(MenuContext);
   const { data, error } = useSWR<SongInterface[], Error>("/song");
+  console.log(data);
 
   if (error) return <div></div>; //skeletons
   if (!data) return <div></div>;
 
   return (
-    <Container closeMenu={menuStatus?.closeMenu}>
+    <Container>
       <Section>
-        <Header>Co právě frčí</Header>
+        <Header>Rock</Header>
         <SongsContainer>
           <Splide
             options={{
@@ -28,10 +29,10 @@ const Home = () => {
               arrows: false,
               pagination: false,
               drag: "free",
-              gap: "2rem",
+              gap: "1rem",
             }}
           >
-            {data.map((song, index) => (
+            {data.songs.map((song: any, index: number) => (
               <SplideSlide key={index}>
                 <Song image={SongImage1} header={song.name} text={song.author} />
               </SplideSlide>

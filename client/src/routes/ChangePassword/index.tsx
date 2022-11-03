@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
-import { Container, Header, LoginButton, RegisterButton, SearchInput } from "./styled";
+import { Container, Header, LoginButton, SearchInput } from "./styled";
 import { useUserContext } from "../../context/user";
 
-const Login = () => {
+const ChangePassword = () => {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const initialState = {
@@ -35,15 +35,15 @@ const Login = () => {
 
   return (
     <Container>
-      <Header>Přihlásit se</Header>
+      <Header>Změnit heslo</Header>
       <form onSubmit={onSubmit}>
-        <SearchInput name="email" onChange={onChange} type={"email"} placeholder="E-mail" required />
-        <SearchInput name="password" onChange={onChange} type={"password"} placeholder="Heslo" required />
+        <SearchInput name="oldPassword" onChange={onChange} type={"password"} placeholder="Staré heslo" required />
+        <SearchInput name="newPassword" onChange={onChange} type={"password"} placeholder="Nové heslo" required />
+        <SearchInput name="confirmPassword" onChange={onChange} type={"password"} placeholder="Potvrďte nové heslo" required />
         <LoginButton type="submit">Potvrdit</LoginButton>
       </form>
-      <RegisterButton onClick={() => navigate("/register")}>Registrovat se</RegisterButton>
     </Container>
   );
 };
 
-export default Login;
+export default ChangePassword;

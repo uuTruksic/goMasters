@@ -1,23 +1,15 @@
 import styled from "styled-components";
 import { fontSize } from "../../styles/styleHelpers";
 
-export const Container = styled.div<{ closeMenu: boolean | null | undefined }>`
+export const Container = styled.div`
   position: relative;
-  margin: 130px 0 0 300px;
-  margin-top: 130px;
-  transition: 0.5s ease-in-out;
-
-  ${({ closeMenu }: any) =>
-    closeMenu &&
-    `
-    margin-left: 50px;
-    transition: 0.5s ease-in;
-    `}
+  width: 100%;
+  margin-top: 120px;
+  padding: 0 100px;
 `;
 
 export const Section = styled.div`
   min-height: 300px;
-  margin-left: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -27,7 +19,7 @@ export const Section = styled.div`
 
 export const Header = styled.h1`
   font-size: ${fontSize("h1")};
-  margin-bottom: 20px;
+  font-weight: 400;
 `;
 
 export const SongsContainer = styled.div`

@@ -1,12 +1,11 @@
-import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
-import { Container, LoginButton, LoginContainer } from "./styled";
+import { Container, Header, RegisterButton, SearchInput } from "./styled";
 
 const Register = () => {
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const [errorStyle, setErrorStyle] = useState({});
 
   const initialState = {
     email: "",
@@ -20,89 +19,43 @@ const Register = () => {
   async function loginUserCallback() {
     // @ts-ignore
     if (values.password === values.confirmPassword && values.password.length > 8) {
-      setError(false);
+      setErrorStyle({});
       try {
-        const res = await fetch("http://localhost:3000/register", {
+        const res = await fetch("http://localhost:3000/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
         });
 
         if (res.status == 200) {
-          navigate("/prihlaseni");
+          alert("Registrace proběhla úspěšně");
+          navigate("/login");
         }
       } catch (e) {
         console.log(e);
         return;
       }
-      //send values
 
+      //send values
       // @ts-ignore
     } else if (values.password.length < 8) {
+      setErrorStyle({ border: "1px solid red" });
       alert("Heslo musí obsahovat alespoň 8 znaků");
-      setError(true);
     } else {
+      setErrorStyle({ border: "1px solid red" });
       alert("Heslo se neshoduje");
-      setError(true);
     }
   }
   return (
     <Container>
-      <h1>Registrace</h1>
+      <Header>Registrace</Header>
       <form onSubmit={onSubmit}>
-        <TextField
-          name="email"
-          onChange={onChange}
-          margin="normal"
-          type={"email"}
-          variant="outlined"
-          label="E-mail"
-          required
-          fullWidth
-        ></TextField>
-        <TextField
-          name="name"
-          onChange={onChange}
-          margin="normal"
-          type={"text"}
-          variant="outlined"
-          label="Jméno"
-          required
-          fullWidth
-        ></TextField>
-        <TextField
-          error={error}
-          name="password"
-          onChange={onChange}
-          onFocus={() => setError(false)}
-          margin="normal"
-          type={"password"}
-          variant="outlined"
-          label="Heslo"
-          required
-          fullWidth
-        ></TextField>
-        <TextField
-          error={error}
-          name="confirmPassword"
-          onChange={onChange}
-          onFocus={() => setError(false)}
-          margin="normal"
-          type={"password"}
-          variant="outlined"
-          label="Potvrďte heslo"
-          required
-          fullWidth
-        ></TextField>
-        <Button type="submit" variant="contained" style={{ marginTop: "15px" }} fullWidth>
-          Odeslat
-        </Button>
+        <SearchInput name="name" onChange={onChange} type={"name"} placeholder="Jméno a příjmení" required />
+        <SearchInput name="email" onChange={onChange} type={"email"} placeholder="E-mail" required />
+        <SearchInput name="password" onChange={onChange} type={"password"} placeholder="Heslo" style={errorStyle} required />
+        <SearchInput name="confirmPassword" onChange={onChange} type={"password"} placeholder="Potvrďte heslo" style={errorStyle} required></SearchInput>
+        <RegisterButton type="submit">Potvrdit</RegisterButton>
       </form>
-      <LoginContainer>
-        <LoginButton onClick={() => navigate("/prihlaseni")}>
-          <p>PŘIHLAŠ SE</p>
-        </LoginButton>
-      </LoginContainer>
     </Container>
   );
 };

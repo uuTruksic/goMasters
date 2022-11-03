@@ -1,10 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "../../utils/useForm";
-import { Container, AvatarContainer } from "./styled";
+import { AvatarImg, ChangePassButton, Container, FormContainer, Header, HiddenImageInput, MainButton, SearchInput, SecondaryButton } from "./styled";
 
-import Avatar from "../../assets/icons/avatar_big.svg";
+import avatar from "../../assets/icons/avatar.svg";
 import { GetSession } from "../../utils/getSession";
+import { useNavigate } from "react-router-dom";
 
 async function LogOut() {
   try {
@@ -14,7 +15,7 @@ async function LogOut() {
       },
     });
     localStorage.removeItem("session");
-    location.replace("/prihlaseni");
+    location.replace("/login");
   } catch (e) {
     console.log(e);
   }
@@ -46,20 +47,28 @@ const MyAccount = () => {
       setError(true);
     }
   }
+
+  const navigate = useNavigate();
+
   return (
     <Container>
-      <AvatarContainer imgUrl={Avatar ? Avatar : Avatar} />
-      <form onSubmit={onSubmit}>
-        <TextField name="email" onChange={onChange} margin="normal" type={"email"} variant="outlined" label="E-mail" fullWidth></TextField>
-        <TextField name="name" onChange={onChange} margin="normal" type={"text"} variant="outlined" label="Jméno" fullWidth></TextField>
-        <TextField error={error} name="password" onChange={onChange} onFocus={() => setError(false)} margin="normal" type={"password"} variant="outlined" label="Heslo" fullWidth></TextField>
-        <Button type="submit" variant="contained" style={{ marginTop: "15px" }} fullWidth>
-          potvrdit
-        </Button>
-        <Button onClick={LogOut} style={{ marginTop: "15px" }} fullWidth>
-          odhlasit se
-        </Button>
-      </form>
+      <FormContainer>
+        <label htmlFor="image-input">
+          <AvatarImg src={avatar} />
+        </label>
+        <HiddenImageInput id="image-input" type="file" />
+        <div>
+          <Header>Můj účet</Header>
+          <form onSubmit={onSubmit}>
+            <SearchInput name="name" onChange={onChange} type={"text"} placeholder="Jméno a příjmení" />
+            <SearchInput name="email" onChange={onChange} type={"email"} placeholder="E-mail" />
+            <ChangePassButton onClick={() => navigate("/change-password")}>Změnit heslo</ChangePassButton>
+          </form>
+        </div>
+      </FormContainer>
+      <MainButton onClick={onSubmit}>Potvrdit</MainButton>
+      <SecondaryButton>Vymazat účet</SecondaryButton>
+      <SecondaryButton onClick={LogOut}>Odhlásit se</SecondaryButton>
     </Container>
   );
 };
