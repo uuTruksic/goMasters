@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 	"spotilie-api/db"
 	"spotilie-api/ent/session"
 	"time"
@@ -36,7 +35,5 @@ func main() {
 		scheduler.StartAsync()
 	}
 
-	log.Println("BAZINGA")
-	log.Println(os.Getenv("PORT"))
-	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
+	log.Fatal(app.Listen(":3000"))
 }

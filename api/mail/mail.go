@@ -4,26 +4,25 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
-	"os"
 )
 
 type MailLogin struct {
 	Host     string
-	Email    string
+	Username string
 	Password string
 }
 
-const GOOGLE_HOST string = "smtp.gmail.com"
+const SEZNAM_HOST string = "smtp.seznam.cz"
 
 func SendEmail(to string, subject string, body string) error {
 	login := MailLogin{
-		Host:     GOOGLE_HOST,
-		Email:    os.Getenv("EMAIL_USERNAME"),
-		Password: os.Getenv("EMAIL_PASSWORD"),
+		Host:     SEZNAM_HOST,
+		Username: "spotilieservice@seznam.cz",
+		Password: "N$65f#m9tdK5",
 	}
 
 	headers := make(map[string]string)
-	headers["From"] = "Spotilie <" + login.Email + ">"
+	headers["From"] = "Spotilie <" + login.Username + ">"
 	headers["To"] = to
 	headers["Subject"] = subject
 	headers["Content-Type"] = "text/html"
@@ -36,7 +35,7 @@ func SendEmail(to string, subject string, body string) error {
 
 	message += "\r\n" + body
 
-	auth := smtp.PlainAuth("", login.Email, login.Password, login.Host)
+	auth := smtp.PlainAuth("", login.Username, login.Password, login.Host)
 
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: true,
@@ -59,7 +58,7 @@ func SendEmail(to string, subject string, body string) error {
 		return err
 	}
 
-	if err = client.Mail(login.Email); err != nil {
+	if err = client.Mail(login.Username); err != nil {
 		return err
 	}
 

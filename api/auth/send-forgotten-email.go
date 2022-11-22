@@ -12,12 +12,13 @@ type ForgottenPassInput struct {
 }
 
 func SendForgottenPasswordEmail(c *fiber.Ctx) error {
-	log.Println("BAZINGA")
 	data := ForgottenPassInput{}
+	err := c.BodyParser(&data)
 
 	token := GenerateSecureToken(69)
+	log.Println(data.Email)
 
-	err := mail.SendEmail(data.Email, "Obnova hesla na nejlepším muzikálním webu vůbec!", "Klikněte zde: http://localhost:5173/new-password"+token)
+	err = mail.SendEmail(data.Email, "Obnova hesla na nejlepším muzikálním webu vůbec!", "Klikněte zde: http://localhost:5173/new-password"+token)
 	if err != nil {
 		log.Println(err)
 		return c.SendStatus(fiber.StatusInternalServerError)
