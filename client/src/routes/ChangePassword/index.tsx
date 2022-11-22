@@ -2,33 +2,41 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
 import { Container, Header, LoginButton, SearchInput } from "./styled";
 import { useUserContext } from "../../context/user";
+import { GetSession } from "../../utils/getSession";
 
 const ChangePassword = () => {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const initialState = {
-    email: "",
-    password: "",
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   };
 
-  const { onChange, onSubmit, values } = useForm(loginUserCallback, initialState);
+  const { onChange, onSubmit, values } = useForm(changePassword, initialState);
 
-  async function loginUserCallback() {
+  async function changePassword() {
+    if (values.oldPassword === values.newPassword) {
+      alert("Nové heslo se shoduje se starým heslem");
+    } else if (values.newPassword !== values.confirmNewPassword) {
+      alert("Nové heslo se neshoduje");
+      console.log(values);
+    }
+
     try {
-      const res = await fetch("http://localhost:3000/auth/login", {
+      const res = await fetch("http://localhost:3000/user/change-password", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: "token " + GetSession() },
         body: JSON.stringify(values),
       });
 
       if (res.status == 200) {
-        const user = await res.json();
-        localStorage.setItem("session", user.session);
-        navigate("/");
-        setUser({ name: user.name });
+        alert("Heslo bylo úspěšně změněno");
       }
+      navigate("/");
     } catch (e) {
       console.log(e);
+      alert("Něco se pokazilo");
       return;
     }
   }
@@ -37,9 +45,9 @@ const ChangePassword = () => {
     <Container>
       <Header>Změnit heslo</Header>
       <form onSubmit={onSubmit}>
-        <SearchInput name="oldPassword" onChange={onChange} type={"password"} placeholder="Staré heslo" required />
+        <SearchInput name="oldPassword" onChange={onChange} type={"password"} placeholder="Současné heslo" required />
         <SearchInput name="newPassword" onChange={onChange} type={"password"} placeholder="Nové heslo" required />
-        <SearchInput name="confirmPassword" onChange={onChange} type={"password"} placeholder="Potvrďte nové heslo" required />
+        <SearchInput name="confirmNewPassword" onChange={onChange} type={"password"} placeholder="Potvrďte nové heslo" required />
         <LoginButton type="submit">Potvrdit</LoginButton>
       </form>
     </Container>

@@ -14,7 +14,10 @@ func Routes(app *fiber.App) {
 	authGroup := app.Group("/auth")
 	authGroup.Post("/login", auth.Login)
 	authGroup.Post("/register", auth.Register)
+	authGroup.Post("/send-email", auth.SendForgottenPasswordEmail)
 
 	userGroup := app.Group("/user")
 	userGroup.Post("/change-data", user.ChangeData)
+	userGroup.Post("/change-password", user.ChangePassword)
+	userGroup.Get("/delete-account", user.DeleteAccout)
 }

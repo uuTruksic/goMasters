@@ -57,6 +57,7 @@ func GetLoggedUser(c *fiber.Ctx) *ent.User {
 	if err != nil {
 		return nil
 	}
+
 	_, err = session.Update().SetUsed(session.Used + 1).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUpdatedAt(time.Now()).Save(c.Context())
 	if err != nil {
 		return nil

@@ -42,12 +42,28 @@ const MyAccount = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `token ${GetSession()}`
+          Authorization: `token ${GetSession()}`,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       });
       const user: User = await res.json();
       setUser(user);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function deleteAccount() {
+    try {
+      const res = await fetch("http://localhost:3000/user/delete-account", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `token ${GetSession()}`,
+        },
+      });
+      alert("Účet POOF!");
+      navigate("/");
     } catch (e) {
       console.error(e);
     }
@@ -70,7 +86,7 @@ const MyAccount = () => {
         </div>
       </FormContainer>
       <MainButton onClick={onSubmit}>Potvrdit</MainButton>
-      <SecondaryButton>Vymazat účet</SecondaryButton>
+      <SecondaryButton onClick={deleteAccount}>Vymazat účet</SecondaryButton>
       <SecondaryButton onClick={LogOut}>Odhlásit se</SecondaryButton>
     </Container>
   );

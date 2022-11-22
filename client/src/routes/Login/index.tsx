@@ -2,9 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../../utils/useForm";
 import { Container, Header, LoginButton, RegisterButton, SearchInput } from "./styled";
 import { useUserContext } from "../../context/user";
+import { useState } from "react";
+import ForgottenPass from "../../components/ForgottenPassword";
 
 const Login = () => {
   const { user, setUser } = useUserContext();
+  const [redirect, isRedirect] = useState(false);
+
   const navigate = useNavigate();
   const initialState = {
     email: "",
@@ -33,7 +37,9 @@ const Login = () => {
     }
   }
 
-  return (
+  return redirect ? (
+    <ForgottenPass />
+  ) : (
     <Container>
       <Header>Přihlásit se</Header>
       <form onSubmit={onSubmit}>
@@ -42,6 +48,7 @@ const Login = () => {
         <LoginButton type="submit">Potvrdit</LoginButton>
       </form>
       <RegisterButton onClick={() => navigate("/register")}>Registrovat se</RegisterButton>
+      <RegisterButton onClick={() => isRedirect(true)}>Zapomněl jsem heslo 🤦🏿🤦🤦🏻‍♂️</RegisterButton>
     </Container>
   );
 };
