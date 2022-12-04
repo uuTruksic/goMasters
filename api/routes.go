@@ -10,6 +10,7 @@ import (
 func Routes(app *fiber.App) {
 	songGroup := app.Group("/song")
 	songGroup.Get("/", getSongs)
+	songGroup.Post("/add-song", addSong)
 
 	authGroup := app.Group("/auth")
 	authGroup.Post("/login", auth.Login)

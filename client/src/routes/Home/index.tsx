@@ -24,8 +24,9 @@ const Home = () => {
         <Header>Rock</Header>
         <SongsContainer>
           <Splide
+            style={{ width: "100%" }}
             options={{
-              perPage: 2,
+              perPage: 5,
               arrows: false,
               pagination: false,
               drag: "free",

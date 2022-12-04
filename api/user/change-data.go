@@ -25,8 +25,6 @@ func ChangeData(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	log.Println(loggedUser)
-
 	user, err := loggedUser.Update().SetName(data.Name).SetEmail(data.Email).Save(c.Context())
 	if err != nil {
 		log.Println(err)

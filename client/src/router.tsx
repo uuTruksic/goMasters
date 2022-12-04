@@ -5,6 +5,7 @@ import ChangePassword from "./routes/ChangePassword";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import MyAccount from "./routes/MyAccount";
+import NewSong from "./routes/NewSong";
 import Register from "./routes/Register";
 
 const Router = () => (
@@ -15,6 +16,7 @@ const Router = () => (
     <Route path="/my-account" element={<MyAccount />} />
     <Route path="/change-password" element={<ChangePassword />} />
     <Route path="/logoff" element={<Logout />} />
+    <Route path="/new-song" element={<NewSong />} />
   </Routes>
 );
 
