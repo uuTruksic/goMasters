@@ -12,7 +12,8 @@ import { useUserContext } from "../../context/user";
 
 async function LogOut() {
   try {
-    const req = await fetch("http://localhost:3000/logout", {
+    await fetch("http://localhost:3000/auth/logout", {
+      method: "POST",
       headers: {
         Authorization: `token ${GetSession()}`,
       },

@@ -12,6 +12,7 @@ func LogOut(c *fiber.Ctx) error {
 	if session == nil {
 		return c.SendStatus(fiber.StatusForbidden)
 	}
+
 	err := db.Client.Session.DeleteOneID(session.ID).Exec(c.Context())
 	if err != nil {
 		log.Println(err)

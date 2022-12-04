@@ -18,7 +18,7 @@ const Register = () => {
 
   async function loginUserCallback() {
     // @ts-ignore
-    if (values.password === values.confirmPassword && values.password.length > 8) {
+    if (values.password === values.confirmPassword && values.password.length >= 8) {
       setErrorStyle({});
       try {
         const res = await fetch("http://localhost:3000/auth/register", {
@@ -38,7 +38,7 @@ const Register = () => {
 
       //send values
       // @ts-ignore
-    } else if (values.password.length < 8) {
+    } else if (values.password.length <= 8) {
       setErrorStyle({ border: "1px solid red" });
       alert("Heslo musí obsahovat alespoň 8 znaků");
     } else {

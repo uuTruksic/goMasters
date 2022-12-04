@@ -93,12 +93,13 @@ func Login(c *fiber.Ctx) error {
 	if passCompare == nil {
 		token := GenerateSecureToken(64)
 		session, err := db.Client.Session.Create().SetToken(token).SetIP(c.IP()).SetDevice(c.Get("user-agent")).SetUsed(0).SetUser(foundUser).Save(c.Context())
-		log.Println("login succesfull")
 
 		if err != nil {
 			log.Print(err)
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
+
+		log.Println("login succesfull")
 		return c.JSON(fiber.Map{"name": foundUser.Name, "session": session.Token, "email": foundUser.Email})
 	} else {
 		log.Println("Wrong password")

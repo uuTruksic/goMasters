@@ -26,3 +26,7 @@ func (User) Edges() []ent.Edge {
 		edge.To("sessions", Session.Type),
 	}
 }
+
+// edge.To("sessions", Session.Type).Annotations(entsql.Annotation{
+// 	OnDelete: entsql.Cascade,
+// }),
