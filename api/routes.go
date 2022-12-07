@@ -22,4 +22,7 @@ func Routes(app *fiber.App) {
 	userGroup.Post("/change-data", user.ChangeData)
 	userGroup.Post("/change-password", user.ChangePassword)
 	userGroup.Get("/delete-account", user.DeleteAccout)
+
+	imageGroup := app.Group("/image")
+	imageGroup.Post("upload", uploadImage)
 }

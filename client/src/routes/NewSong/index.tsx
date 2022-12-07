@@ -14,6 +14,35 @@ function NewSong() {
 
   const { onChange, onSubmit, values } = useForm(addSongCallBack, initialState);
 
+  async function uploadImage(file: File) {
+    if (!file) {
+      return;
+    }
+
+    if (file.size == 0) {
+      alert(`Soubor ${file.name} je prázdný`);
+      return;
+    }
+
+    let xhrObj = new XMLHttpRequest();
+    xhrObj.open("POST", "http://localhost:3000/image/upload", true);
+
+    const body = new FormData();
+    body.append("file", file);
+    xhrObj.send(body);
+
+    let response: any;
+    const finalResponse = new Promise((r) => response = r);
+
+    xhrObj.onreadystatechange = () => {
+      if(xhrObj.readyState === XMLHttpRequest.DONE && xhrObj.status == 200){
+         response(xhrObj);
+      } 
+    }
+
+    return finalResponse;
+  }
+
   async function addSongCallBack() {
     try {
       const res = await fetch("http://localhost:3000/song/add-song", {
@@ -34,6 +63,10 @@ function NewSong() {
   const onImageChange = async (event: any) => {
     if (event.target.files && event.target.files[0]) {
       setViewImage(URL.createObjectURL(event.target.files[0]));
+      values.image = event.target.files[0]
+      const response: any = await uploadImage(event.target.files[0]);
+      const token = response.responseText;
+      console.log(token);
     }
   };
 
